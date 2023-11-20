@@ -36,8 +36,8 @@ class Server {
 
     routes() {
         this.app.use('/', routesDefault);
-        //this.app.use('/api/tarjeta', TokenValidation, routesTarjeta );
-        this.app.use('/api/tarjeta', routesTarjeta );
+        this.app.use('/api/tarjeta', TokenValidation, routesTarjeta );
+        //this.app.use('/api/tarjeta', routesTarjeta );
         this.app.use('/api/savetarjeta', routesSaveTarjeta );
     }
 

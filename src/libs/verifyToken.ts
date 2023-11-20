@@ -1,14 +1,30 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from 'jsonwebtoken';
 
-export const TokenValidation = (req: Request, res: Response, next: NextFunction) => {
-    const bearerHeader = req.headers['authorization'];
+interface IVerified {
+   
+    tarjeta: {
+        email: string;
+        card_number: string;
+        expiration_year: string;
+        expiration_month: string;
+        // Otras propiedades de tarjetadatos si las tienes
+    };
 
-    if(typeof bearerHeader !== 'undefined' ){
-        const bearerToken = bearerHeader.split(" ")[1];
-        req.token = bearerToken;
-        next();
-    }else{
-        res.sendStatus(403);
-    }
 }
+
+export const TokenValidation = (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1]; // Authorization: 'Bearer TOKEN'
+    if (!token) {
+      throw new Error('Authentication failed!');
+    }
+    const verified = jwt.verify(token, 'secretkey') as IVerified;
+    console.log(verified); 
+    req.tarjeta = verified.tarjeta; 
+    console.log(req.tarjeta); 
+    next();
+  } catch (err) {
+    res.status(400).send('Token inválido o expirado!');
+  }
+};
