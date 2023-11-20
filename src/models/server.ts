@@ -1,5 +1,5 @@
 import express, { Application } from 'express';
-import connection from '../db/connection';
+
 import routesDefault from '../routes/default.routes';
 import routesTarjeta from '../routes/tarjeta.routes';
 import routesSaveTarjeta from '../routes/savetarjeta.routes';
@@ -16,7 +16,6 @@ class Server {
         this.app = express();
         this.port = process.env.PORT || '3005';
         this.listen();
-        this.conectDB();
         this.midlewares()
         this.routes();
         this.redis();
@@ -28,15 +27,7 @@ class Server {
         })
     }
 
-    conectDB() {
-        connection.connect((err) => {
-            if(err) {
-                console.log(err)
-            } else {
-                console.log('Base de datos conectada exitosamente!');
-            }
-        })
-    }
+ 
 
     routes() {
         this.app.use('/', routesDefault);

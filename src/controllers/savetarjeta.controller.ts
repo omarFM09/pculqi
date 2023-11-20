@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-//import connection from '../db/connection';
 import jwt from 'jsonwebtoken';
 import redisClient from '../redisConfig';
 
