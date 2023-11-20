@@ -20,9 +20,7 @@ export const TokenValidation = (req: Request, res: Response, next: NextFunction)
       throw new Error('Authentication failed!');
     }
     const verified = jwt.verify(token, 'secretkey') as IVerified;
-    console.log(verified); 
     req.tarjeta = verified.tarjeta; 
-    console.log(req.tarjeta); 
     next();
   } catch (err) {
     res.status(400).send('Token inválido o expirado!');

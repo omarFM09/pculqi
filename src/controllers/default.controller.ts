@@ -1,15 +1,15 @@
 import { Request, Response } from 'express';
-import redisClient from '../../redisClient';
 
 export const getDefault = async (req: Request, res: Response) => {
-    
-  await redisClient.set('miClave', 'miValor');
-  const valor = await redisClient.get('miClave');
 
-  console.log(valor);
+   
+    try{
+  
     res.json({
-        msg: 'API funcionandoo',
-        data: valor,
-        type: 'mensaje'
+        msg: 'API FUNCIONANDO'
     })
+    } catch (error){
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+   
 }

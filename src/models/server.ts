@@ -4,6 +4,9 @@ import routesDefault from '../routes/default.routes';
 import routesTarjeta from '../routes/tarjeta.routes';
 import routesSaveTarjeta from '../routes/savetarjeta.routes';
 import { TokenValidation } from '../libs/verifyToken';
+import { createClient } from 'redis';
+
+
 
 class Server {
     private app: Application;
@@ -16,6 +19,7 @@ class Server {
         this.conectDB();
         this.midlewares()
         this.routes();
+        this.redis();
     }
 
     listen() {
@@ -45,6 +49,15 @@ class Server {
         this.app.use(express.json());
     }
 
+    redis(){
+        const client = createClient({
+            password: process.env.REDIS_PASSWORD,
+            socket: {
+                host: process.env.REDIS_HOST,
+                port: parseInt(process.env.REDIS_PORT || '6379', 10)
+            }
+        });
+    }
 }
 
 export default Server;
