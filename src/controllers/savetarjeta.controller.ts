@@ -52,7 +52,7 @@ export const addTarjeta = async (req: Request, res: Response) => {
         email, card_number, cvv, expiration_year, expiration_month
     }
     await redisClient.set('tarjeta', datotarjeta);
-    jwt.sign({tarjeta}, 'secretkey', {expiresIn: '6000s'}, (err, token) => {
+    jwt.sign({tarjeta}, 'secretkey', {expiresIn: '60s'}, (err, token) => {
         res.json({
             token
         })
